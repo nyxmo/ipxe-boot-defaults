@@ -9,7 +9,7 @@ script: make build
 
 before_deploy:
     - mkdir dist
-    - docker cp ipxe-boot-defaults:/ipxe/src/bin/. dist
+    - docker cp nyxmo/ipxe-boot-defaults:/ipxe/src/bin/. dist
 
 deploy:
   provider: releases

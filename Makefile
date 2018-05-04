@@ -1,5 +1,4 @@
 docker_tag 	= nyxmo/ipxe-boot-defaults
-docker_name 	= ipxe-boot-defaults
 
 UNAME_S        := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
@@ -10,7 +9,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 build:
-	docker build -t $(docker_tag) -name $(docker_name) .
+	docker build -t $(docker_tag) .
 
 bash:
 	docker run --rm -it $(docker_tag) bash
