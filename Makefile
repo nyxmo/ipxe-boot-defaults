@@ -10,13 +10,3 @@ endif
 
 build:
 	docker build -t $(docker_tag) .
-
-bash:
-	docker run --rm -it $(docker_tag) bash
-
-run:
-	$(eval ID := $(shell docker run -d ${docker_tag}))
-	$(eval IP := $(shell docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${ID}))
-	@echo "Running ${ID} @ ftp://${IP}"
-	@docker attach ${ID}
-	@docker kill ${ID}
