@@ -20,5 +20,5 @@ deploy:
   file:
     - dist/ipxe.iso
     - dist/undionly.lpxe
-#  on:
-#    tags: true
+  on:
+    tags: true
