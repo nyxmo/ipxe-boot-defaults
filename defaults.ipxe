@@ -1,0 +1,22 @@
+ #!ipxe
+ 
+ set bserver "bootserver.local"
+ set bport 80
+ 
+ # show boot prompt (disabled if script is embedded)
+ prompt --key 0x02 --timeout 1500 Press Ctrl-B for the iPXE command line... && shell ||
+
+:retry
+
+# run dhcp 
+dhcp
+
+# try dynamic
+chain http://{bserver}:{bport}/dynamic.ipxe?dynamic=1&mac=${mac}&ip=${ip}&uuid=${uuid}&serial=${serial}&platform=${platform} ||
+echo Unable to load: http://{bserver}:{bport}/dynamic.ipxe?dynamic=1&more_parameters...
+
+# try static
+chain http://{bserver}:{bport}/default.ipxe
+
+goto retry
+
