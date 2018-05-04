@@ -9,8 +9,8 @@ script: make build
 
 before_deploy:
     - mkdir dist
-    - $(eval ID := $(shell docker create nyxmo/ipxe-boot-defaults))
-    - docker cp $(ID):/ipxe/src/bin/. dist
+    - ID=$(docker create nyxmo/ipxe-boot-defaults)
+    - docker cp ${ID}:/ipxe/src/bin/. dist/
 
 deploy:
   provider: releases
