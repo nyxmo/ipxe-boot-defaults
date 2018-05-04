@@ -1,0 +1,23 @@
+sudo: required
+
+language: C
+
+services:
+- docker
+
+script: make build
+
+before_deploy:
+    - mkdir dist
+    - docker cp ipxe-boot-defaults:/ipxe/src/bin/. dist
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: NQZ3p+i+KgRAL7v9OQD9bCJ0EF4KNfCxkfS+C5bHntSo8O0n8nW3eTbvp8Jf10FeVqzdI5Zd4EjF1g1TpBPphLkhKRpXdvyLPoREpDcYmFjV5WM8TJ5RtiV24Lr8CZbVK6PcoDryVbjla4heuB6ssuyGfCRT/Uc3JYnbeM6C7WK/phMn5tGn2qHj3yFbA26GB8hlC/nE+ZXzndO0lIb8u1IfGQ25s7Lyhf6c4/VYqyZcG+luA5qT1btGKolvc8jX+WRF/jUWtK73GquADF85DHkU6vLUHl7UabquOVepSkKzXnCtNmVOc+PCmfllWM0s8XV+zUYL0aCOE/ZDwBYYAledNj0oO2pjctQjvn4Ja8eanBlKpKdTmsEvVsG2AtWxBE0B1MD+DyZz6PeeD7JFtrPqDq2cPKB8TQbZ23pL0Xuh+YH+5Wu+alZdyQNxR6HzLEQw/I5ZY5vzyrXJGm4oN4xQjJqqGA5qltGfiodAcX0kb0Gdr/0op+C10bGxntpU0PTQjHW5eB/yJEyOfT5gH1a/ggX2FBkBeVjSx9uZvkLPRwZ6wPKvAh+Llyn6GzBrMk8wYqxwsHf4PdsZPm2El6h8STbWCMaUPBKNcEfvGcEA3EHTSpQWnc3dLAQW07jqybvgqd6ZMsjuk772vPDG5AiovNCQLr3NTGcJTuFBk6g=
+  file:
+    - dist/ipxe.iso
+    - dist/undionly.lpxe
+#  on:
+#    tags: true
