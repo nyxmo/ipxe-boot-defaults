@@ -12,7 +12,9 @@ prompt --key 0x02 --timeout 5000 Press Ctrl-B for the iPXE command line && shell
 # run dhcp
 echo Start DHCP (net0+1)
 dhcp net0 || echo DHCP on not0 failed
+echo net0 IP: ${net0/ip} GW: ${net0/gateway} DNS: ${net0/dns}
 dhcp net1 || echo DHCP on net0 failed
+echo net1 IP: ${net1/ip} GW: ${net1/gateway} DNS: ${net1/dns}
 
 ### TRY DEFAULTS SERVERS ###
 
