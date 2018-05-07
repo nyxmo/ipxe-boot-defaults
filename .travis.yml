@@ -31,6 +31,5 @@ deploy:
     - dist/8086100f.mrom
     - dist/808610d3.mrom
     - dist/rtl8139.rom
-
   on:
     tags: true
