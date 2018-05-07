@@ -23,8 +23,8 @@ echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_para
 
 # try static
 echo Try static
-chain http://${bserver}:${bport}/default.ipxe ||
-echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
+chain http://${bserver}:${bport}/static.ipxe ||
+echo Unable to load: http://${bserver}:${bport}/static.ipxe
 
 ### TRY DHCP net0 next-server ###
 
@@ -37,8 +37,8 @@ echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_para
 
 # try static
 echo Try static
-chain http://${bserver}:${bport}/default.ipxe ||
-echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
+chain http://${bserver}:${bport}/static.ipxe ||
+echo Unable to load: http://${bserver}:${bport}/static.ipxe
 
 ### TRY DHCP net1 next-server ###
 
@@ -51,8 +51,8 @@ echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_para
 
 # try static
 echo Try static
-chain http://${bserver}:${bport}/default.ipxe ||
-echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
+chain http://${bserver}:${bport}/static.ipxe ||
+echo Unable to load: http://${bserver}:${bport}/static.ipxe
 
 
 
