@@ -1,22 +1,62 @@
- #!ipxe
- 
- set bserver "bootserver.local"
- set bport 80
- 
- # show boot prompt (disabled if script is embedded)
- prompt --key 0x02 --timeout 1500 Press Ctrl-B for the iPXE command line... && shell ||
+#!ipxe
 
 :retry
+echo Starting my boot script
 
-# run dhcp 
-dhcp
+set bserver bootserver.local
+set bport 8090
+
+# show boot prompt (disabled if script is embedded)
+prompt --key 0x02 --timeout 5000 Press Ctrl-B for the iPXE command line && shell ||
+
+# run dhcp
+echo Start DHCP (net0+1)
+dhcp net0 || echo DHCP on not0 failed
+dhcp net1 || echo DHCP on net0 failed
+
+### TRY DEFAULTS SERVERS ###
 
 # try dynamic
-chain http://{bserver}:{bport}/dynamic.ipxe?dynamic=1&mac=${mac}&ip=${ip}&uuid=${uuid}&serial=${serial}&platform=${platform} ||
-echo Unable to load: http://{bserver}:{bport}/dynamic.ipxe?dynamic=1&more_parameters...
+echo Try dynamic
+chain http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&mac=${mac}&ip=${ip}&uuid=${uuid}&serial=${serial}&platform=${platform} ||
+echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
 
 # try static
-chain http://{bserver}:{bport}/default.ipxe
+echo Try static
+chain http://${bserver}:${bport}/default.ipxe ||
+echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
 
+### TRY DHCP net0 next-server ###
+
+set bserver ${net0/next-server}
+
+# try dynamic
+echo Try dynamic
+chain http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&mac=${mac}&ip=${ip}&uuid=${uuid}&serial=${serial}&platform=${platform} ||
+echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
+
+# try static
+echo Try static
+chain http://${bserver}:${bport}/default.ipxe ||
+echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
+
+### TRY DHCP net1 next-server ###
+
+set bserver ${net1/next-server}
+
+# try dynamic
+echo Try dynamic
+chain http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&mac=${mac}&ip=${ip}&uuid=${uuid}&serial=${serial}&platform=${platform} ||
+echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
+
+# try static
+echo Try static
+chain http://${bserver}:${bport}/default.ipxe ||
+echo Unable to load: http://${bserver}:${bport}/dynamic.ipxe?dynamic=1&more_parameters...
+
+
+
+
+echo "Sleeping"
+sleep 2
 goto retry
-

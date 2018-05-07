@@ -21,10 +21,10 @@ RUN git clone --depth 1 git://git.ipxe.org/ipxe.git /ipxe
 
 WORKDIR /ipxe/src
 
-COPY defaults.ipxe /ipxe/src
+COPY defaults.ipxe /ipxe/src/defaults
 COPY build.sh /ipxe/src
 RUN chmod 777 build.sh
 
 RUN ./build.sh
 
-CMD ["./build.sh"]
+CMD ["/bin/bash"]

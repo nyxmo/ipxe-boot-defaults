@@ -10,3 +10,10 @@ endif
 
 build:
 	docker build -t $(docker_tag) .
+
+copy:
+	$(eval ID := $(shell docker create ${docker_tag}))
+	@echo "Copy bin files from container [${ID}] to dist/"
+	@docker cp  $(ID):/ipxe/src/bin/. dist/
+	@echo "Removing docker container"
+	@docker rm $(ID)

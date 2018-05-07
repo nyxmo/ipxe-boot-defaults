@@ -4,16 +4,11 @@
 echo "CFLAGS	+= -fno-pie" >> arch/x86/Makefile.pcbios
 echo "LDFLAGS	+= -no-pie" >> arch/x86/Makefile.pcbios
 
-make all EMBED=defaults.ipxe
+make bin/ipxe.iso EMBED=/ipxe/src/defaults
+#make all EMBED=defaults.ipxe
 
 rm bin/*.o
 rm bin/*.a
 rm bin/*tmp*
 
 ls -la bin/
-
-#make bin/ipxe.usb EMBED=defaults.ipxe
-#make bin/undionly.kpxe EMBED=defaults.ipxe
-
-#make vmware
-
